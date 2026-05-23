@@ -1,0 +1,163 @@
+/* ============ KFSHRC Overtime Availability — Styles ============ */
+:root{
+  --bg:#f4f6f8;
+  --surface:#ffffff;
+  --ink:#162130;
+  --ink-soft:#4a5765;
+  --muted:#7c8896;
+  --line:#dde3ea;
+  --primary:#0b5d8a;
+  --primary-ink:#ffffff;
+  --primary-soft:#e6f1f8;
+  --danger:#a8341f;
+  --success:#1c7a3e;
+  --warn:#a06200;
+  --shadow: 0 1px 2px rgba(20,30,50,.06), 0 4px 12px rgba(20,30,50,.05);
+  --radius:10px;
+  --radius-sm:6px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.45}
+.hidden{display:none !important}
+.muted{color:var(--muted)}
+.small{font-size:.875rem}
+
+/* Top bar */
+.topbar{
+  position:sticky;top:0;z-index:5;
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+  padding:12px 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-top: calc(12px + env(safe-area-inset-top));
+}
+.brand{font-size:1.05rem;margin:0;font-weight:600;color:var(--ink)}
+.userbar{display:flex;align-items:center;gap:10px}
+.user-label{font-size:.9rem;color:var(--ink-soft)}
+
+/* Container */
+.container{max-width:1100px;margin:0 auto;padding:16px}
+
+/* Card */
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px;
+  box-shadow:var(--shadow);
+  margin-bottom:16px;
+}
+.card h2{margin:0 0 12px;font-size:1.1rem}
+.row-between{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin:8px 0 14px}
+.tab{
+  background:none;border:none;padding:8px 12px;cursor:pointer;
+  color:var(--ink-soft);font-size:.95rem;border-bottom:2px solid transparent;
+}
+.tab.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:600}
+
+/* Nav tabs (in-app) */
+.navtabs{
+  display:flex;gap:4px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:4px;margin-bottom:12px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.navtab{
+  flex:0 0 auto;background:none;border:none;
+  padding:10px 14px;border-radius:var(--radius-sm);
+  cursor:pointer;color:var(--ink-soft);font-size:.95rem;font-weight:500;
+}
+.navtab.active{background:var(--primary-soft);color:var(--primary)}
+
+/* Form */
+.form{display:flex;flex-direction:column;gap:12px}
+.form.grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:720px){
+  .form.grid{grid-template-columns:1fr 1fr}
+  .span2{grid-column:1 / -1}
+}
+label{display:flex;flex-direction:column;gap:6px;font-size:.9rem;color:var(--ink-soft);font-weight:500}
+input[type=text],input[type=email],input[type=password],input[type=date],select,textarea{
+  width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-sm);
+  font:inherit;color:var(--ink);background:var(--surface);
+}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--primary-soft);border-color:var(--primary)}
+textarea{resize:vertical}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:10px 14px;border-radius:var(--radius-sm);
+  border:1px solid transparent;cursor:pointer;font:inherit;font-weight:500;
+  min-height:40px;
+}
+.btn-primary{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+.btn-primary:hover{filter:brightness(1.05)}
+.btn-ghost{background:transparent;color:var(--primary);border-color:var(--line)}
+.btn-ghost:hover{background:var(--primary-soft)}
+.btn-danger{background:#fff;color:var(--danger);border-color:#e9c5be}
+.btn-danger:hover{background:#fbeeea}
+.btn-small{padding:6px 10px;min-height:32px;font-size:.85rem}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Date chip list */
+.date-row{display:flex;gap:8px}
+.date-row input[type=date]{flex:1}
+.chip-list{list-style:none;padding:0;margin:8px 0 0;display:flex;flex-wrap:wrap;gap:6px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--primary-soft);color:var(--primary);
+  border-radius:999px;padding:4px 10px;font-size:.85rem;
+}
+.chip button{background:none;border:none;color:var(--primary);cursor:pointer;font-size:1rem;line-height:1;padding:0}
+
+/* Filters */
+.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end}
+.filters label{min-width:140px;flex:1 1 140px}
+.sticky-filters{position:sticky;top:60px;z-index:3}
+
+/* Tables */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.data{width:100%;border-collapse:collapse;font-size:.92rem;min-width:640px}
+table.data th, table.data td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+table.data th{background:#f8fafc;color:var(--ink-soft);font-weight:600;position:sticky;top:0}
+table.data tr.assigned{background:#eaf6ee}
+table.data tr.expired{color:var(--muted)}
+table.data tr.cancelled{color:var(--muted);text-decoration:line-through}
+
+/* Status badges */
+.badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.02em}
+.badge-Available{background:#e6f1f8;color:#0b5d8a}
+.badge-Contacted{background:#fdf3df;color:#8a5a00}
+.badge-Assigned{background:#dbf0e2;color:#1c7a3e}
+.badge-Cancelled{background:#f1e3e0;color:#a8341f}
+.badge-Expired{background:#eef0f3;color:#6b7682}
+
+/* Messages */
+.msg{margin:0;font-size:.9rem;min-height:1.2em}
+.msg.error{color:var(--danger)}
+.msg.success{color:var(--success)}
+
+/* Toast */
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+  background:#162130;color:#fff;padding:10px 14px;border-radius:var(--radius-sm);
+  box-shadow:var(--shadow);font-size:.9rem;z-index:50;
+}
+
+/* Mobile tweaks */
+@media (max-width:540px){
+  .brand{font-size:.95rem}
+  .container{padding:12px}
+  .card{padding:14px}
+  table.data{font-size:.88rem}
+  .sticky-filters{position:static}
+}
