@@ -5,8 +5,8 @@
 ===================================================================== */
 
 // ---------- 1) CONFIG: REPLACE THESE TWO VALUES ----------
-const SUPABASE_URL      = "https://YOUR-PROJECT-REF.supabase.co"; // <-- replace
-const SUPABASE_ANON_KEY = "YOUR-PUBLIC-ANON-KEY";                 // <-- replace
+const SUPABASE_URL      = "https://vuwnwtzhvahiluxnxawd.supabase.co"; // <-- replace
+const SUPABASE_ANON_KEY = "sb_publishable_m5jmbwes_7PzVeoR6t3Xgw_lWqRaN8J";                 // <-- replace
 // ---------------------------------------------------------
 
 const ALLOWED_DOMAIN = "@kfshrc.edu.sa";
