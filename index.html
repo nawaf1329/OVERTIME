@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b5d8a" />
+  <title>KFSHRC Overtime Availability System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1 class="brand">KFSHRC Overtime Availability System</h1>
+    <div id="userBar" class="userbar hidden">
+      <span id="userLabel" class="user-label"></span>
+      <button id="btnLogout" class="btn btn-ghost">Sign out</button>
+    </div>
+  </header>
+
+  <!-- ============== AUTH ============== -->
+  <main id="authView" class="container">
+    <section class="card">
+      <h2>Sign in</h2>
+      <p class="muted">Use your KFSHRC hospital email only (<strong>@kfshrc.edu.sa</strong>).</p>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="login">Login</button>
+        <button class="tab" data-tab="signup">Register</button>
+      </div>
+
+      <!-- Login -->
+      <form id="loginForm" class="form">
+        <label>Hospital email
+          <input type="email" id="loginEmail" autocomplete="username" required />
+        </label>
+        <label>Password
+          <input type="password" id="loginPassword" autocomplete="current-password" required minlength="8" />
+        </label>
+        <button type="submit" class="btn btn-primary">Login</button>
+        <p id="loginMsg" class="msg" role="alert"></p>
+      </form>
+
+      <!-- Signup -->
+      <form id="signupForm" class="form hidden">
+        <label>Full name
+          <input type="text" id="suName" required />
+        </label>
+        <label>Hospital email
+          <input type="email" id="suEmail" required />
+        </label>
+        <label>Department
+          <input type="text" id="suDept" required />
+        </label>
+        <label>Job title
+          <input type="text" id="suJob" required />
+        </label>
+        <label>Password (min 8 characters)
+          <input type="password" id="suPassword" required minlength="8" autocomplete="new-password" />
+        </label>
+        <button type="submit" class="btn btn-primary">Create account</button>
+        <p class="muted small">New accounts are created with the <strong>Staff</strong> role. Elevated roles are assigned by an administrator.</p>
+        <p id="signupMsg" class="msg" role="alert"></p>
+      </form>
+    </section>
+  </main>
+
+  <!-- ============== APP ============== -->
+  <main id="appView" class="container hidden">
+    <nav class="navtabs" id="navTabs">
+      <button class="navtab active" data-view="staff">My availability</button>
+      <button class="navtab hidden" data-view="leadership" id="navLeadership">Leadership</button>
+      <button class="navtab hidden" data-view="admin" id="navAdmin">Admin</button>
+    </nav>
+
+    <!-- ============= STAFF VIEW ============= -->
+    <section id="staffView" class="view">
+      <div class="card">
+        <h2>Submit overtime availability</h2>
+        <form id="availForm" class="form grid">
+          <label>Shift preference
+            <select id="afShift" required>
+              <option value="Day">Day</option>
+              <option value="Night">Night</option>
+              <option value="Any" selected>Any</option>
+            </select>
+          </label>
+
+          <label>Can float outside your department?
+            <select id="afFloat" required>
+              <option value="false">No</option>
+              <option value="true">Yes</option>
+            </select>
+          </label>
+
+          <label class="span2">Preferred departments (optional)
+            <input type="text" id="afPref" placeholder="e.g. ICU, ER, Med-Surg" />
+          </label>
+
+          <label class="span2">Notes (optional)
+            <textarea id="afNotes" rows="2" placeholder="Anything leadership should know"></textarea>
+          </label>
+
+          <div class="span2 date-block">
+            <label>Add available date(s)
+              <div class="date-row">
+                <input type="date" id="afDate" />
+                <button type="button" id="btnAddDate" class="btn btn-ghost">Add date</button>
+              </div>
+            </label>
+            <ul id="dateList" class="chip-list"></ul>
+          </div>
+
+          <div class="span2 actions">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+          <p id="availMsg" class="msg span2" role="alert"></p>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="row-between">
+          <h2>My submissions</h2>
+          <button id="btnRefreshMine" class="btn btn-ghost">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Date</th><th>Shift</th><th>Float</th>
+                <th>Preferred</th><th>Status</th><th>Updated</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="myAvailBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= LEADERSHIP VIEW ============= -->
+    <section id="leadershipView" class="view hidden">
+      <div class="card sticky-filters">
+        <h2>Available staff</h2>
+        <div class="filters">
+          <label>Date
+            <input type="date" id="flDate" />
+          </label>
+          <label>Shift
+            <select id="flShift">
+              <option value="">All</option>
+              <option value="Day">Day</option>
+              <option value="Night">Night</option>
+              <option value="Any">Any</option>
+            </select>
+          </label>
+          <label>Department
+            <input type="text" id="flDept" placeholder="Department" />
+          </label>
+          <label>Can float
+            <select id="flFloat">
+              <option value="">All</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </label>
+          <label>Status
+            <select id="flStatus">
+              <option value="Available" selected>Available</option>
+              <option value="Contacted">Contacted</option>
+              <option value="Assigned">Assigned</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="Expired">Expired</option>
+              <option value="">All</option>
+            </select>
+          </label>
+          <button id="btnApplyFilters" class="btn btn-primary">Apply</button>
+          <button id="btnResetFilters" class="btn btn-ghost">Reset</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Name</th><th>Email</th><th>Department</th><th>Job</th>
+                <th>Date</th><th>Shift</th><th>Float</th>
+                <th>Preferred</th><th>Notes</th><th>Status</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="leadBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= ADMIN VIEW ============= -->
+    <section id="adminView" class="view hidden">
+      <div class="card">
+        <div class="row-between">
+          <h2>Users</h2>
+          <button id="btnRefreshUsers" class="btn btn-ghost">Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Name</th><th>Email</th><th>Department</th><th>Job</th><th>Role</th><th>Active</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="usersBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row-between">
+          <h2>All availability records</h2>
+          <div>
+            <button id="btnExportCsv" class="btn btn-primary">Export CSV</button>
+            <button id="btnRefreshAllAvail" class="btn btn-ghost">Refresh</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Name</th><th>Email</th><th>Department</th><th>Job</th>
+                <th>Date</th><th>Shift</th><th>Float</th>
+                <th>Preferred</th><th>Notes</th><th>Status</th><th>Created</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="allAvailBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <!-- Supabase JS v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
